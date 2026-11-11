@@ -1,14 +1,6 @@
-# Branching Choice-Node Threads
-
-> **Status: incomplete source handoff — not deployable yet.**
->
-> This repository contains the backend/server-action starter files supplied in the current Claude ZIP. It does not yet include the Next.js app entry points (`app/page.tsx`, `app/layout.tsx`), global styles, Tailwind/PostCSS configuration, or the auth callback route. A Vercel build will fail until those are added.
-
-## Next steps
-
-1. Complete the missing frontend and configuration files.
-2. Add the reviewed Supabase core migration at `supabase/migrations/0001_core.sql` and verify both migrations on a fresh Supabase project.
-3. Configure environment variables from `.env.example` in Vercel.
-4. Connect this repository to Vercel for a live preview.
-
-Do not add real secrets to this repository. Keep the Supabase service-role key server-side only.
+# Setup
+1. `npm i` · copy `.env.example` → `.env.local` and fill it in.
+2. Supabase SQL editor: run `0001_core.sql` (done) then `0002_hardening.sql`.
+3. Auth → URL config: Site URL + `…/auth/callback`; keep email confirmation ON.
+4. Add `app/auth/callback/route.ts` (exchangeCodeForSession) — still to build.
+5. Vercel: set all env vars. `vercel.json` cron runs every minute (needs Pro; on Hobby use pg_cron: `select cron.schedule('lock','* * * * *',$$select lock_expired_nodes()$$);`).
